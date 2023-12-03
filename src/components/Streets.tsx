@@ -25,35 +25,31 @@ function Streets({ street }: StreetProps) {
   }
 
   return (
-    <div>
-      {' '}
-      <Accordion>
-        <AccordionSummary
-          onClick={handleClick(street.id)}
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls='panel1a-content'
-          id='panel1a-header'
-        >
-          <Typography>
-            {street.prefix.name}.{street.name}
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography component={'span'}>
-            <Grid container spacing={2} direction='column'>
-              {loadingHouses && <CircularProgress color='secondary' />}
-              {houses &&
-                houses.map((house: IHouse) => (
-                  <Grid key={house.id} xs={8}>
-                    <House house={house} streetId={street.id} />
-                    {/* Дом&nbsp;{house.name} */}
-                  </Grid>
-                ))}
-            </Grid>
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-    </div>
+    <Accordion>
+      <AccordionSummary
+        onClick={handleClick(street.id)}
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls='panel1a-content'
+        id='panel1a-header'
+      >
+        <Typography>
+          {street.prefix.name}.{street.name}
+        </Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        {/* <Typography component={'span'}> */}
+        <Grid container spacing={2} direction='column'>
+          {loadingHouses && <CircularProgress color='secondary' />}
+          {houses &&
+            houses.map((house: IHouse) => (
+              <Grid key={house.id} xs={12}>
+                <House house={house} streetId={street.id} />
+              </Grid>
+            ))}
+        </Grid>
+        {/* </Typography> */}
+      </AccordionDetails>
+    </Accordion>
   )
 }
 

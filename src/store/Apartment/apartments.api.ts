@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IStreets } from '../../models/models'
+import { IClientRes, IFormInput, IStreets } from '../../models/models'
 
 export const apartmentsApi = createApi({
   reducerPath: 'apartments/api',
@@ -7,6 +7,7 @@ export const apartmentsApi = createApi({
     baseUrl: process.env.REACT_APP_BASE_URL,
   }),
   // refetchOnFocus: true,
+  tagTypes: ['Clients'],
   endpoints: (build) => ({
     getStreets: build.query<IStreets[], any>({
       query: () => ({
@@ -23,24 +24,16 @@ export const apartmentsApi = createApi({
         url: `Request/house_flats/${id}`,
       }),
     }),
-    getClients: build.query<any, number>({
-      query: (addressId) => ({
-        url: `/HousingStock/clients`,
-        params: {
-          addressId: addressId,
-        },
-      }),
-    }),
-    getHousingStock: build.query<any, any>({
-      query: ({ companyId = 123, streetId, houseId }) => ({
-        url: `/HousingStock`,
-        params: {
-          companyId: companyId,
-          streetId: streetId,
-          houseId: houseId,
-        },
-      }),
-    }),
+    // getHousingStock: build.query<any, any>({
+    //   query: ({ companyId = 123, streetId, houseId }) => ({
+    //     url: `/HousingStock`,
+    //     params: {
+    //       companyId: companyId,
+    //       streetId: streetId,
+    //       houseId: houseId,
+    //     },
+    //   }),
+    // }),
   }),
 })
 
@@ -48,7 +41,5 @@ export const {
   useGetStreetsQuery,
   useLazyGetHouseQuery,
   useLazyGetFlatQuery,
-  useLazyGetHousingStockQuery,
-  useLazyGetClientsQuery,
-  useGetClientsQuery,
+  // useLazyGetHousingStockQuery,
 } = apartmentsApi

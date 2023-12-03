@@ -17,10 +17,6 @@ export interface IStreets {
 export interface IHouse {
   id: number
   name: string
-  // Type: {
-  //   Id: number
-  //   Text: string
-  // }
 }
 export interface IFlat {
   id: number
@@ -35,4 +31,18 @@ export interface IClient {
   phone: number
   email: string
   bindId: string
+}
+export interface IClientRes {
+  id: number
+  result: string
+}
+
+export interface IFormInput {
+  name: string
+  email: string
+  phone: string
+}
+export interface IBind {
+  adress: string
+  client: string
 }

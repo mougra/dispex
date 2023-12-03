@@ -2,33 +2,51 @@ import React from 'react'
 import { IClient } from '../models/models'
 import {
   Card,
-  CardActionArea,
   CardContent,
   Typography,
-  CardActions,
   Button,
+  CardActions,
 } from '@mui/material'
+import { residentsApi } from '../store/Residents/residents.api'
 
 interface UserCardProps {
   user: IClient
 }
 
 function UserCard({ user }: UserCardProps) {
+  const [deleteClients, { data: deletUser }] =
+    residentsApi.useDeleteClientsMutation({})
+
+  const handleSubmit: any = () => {
+    deleteClients(user.id)
+  }
+
   return (
     <>
-      <Card sx={{ maxWidth: 345 }}>
-        <CardActionArea>
+      {user && (
+        <Card variant='outlined'>
           <CardContent>
-            <Typography gutterBottom variant='h5' component='div'>
-              {user && <div>{user.name}</div>}
+            <Typography variant='h2' sx={{ fontSize: 22 }} gutterBottom>
+              {user.name}
             </Typography>
-            <Typography variant='body2' color='text.secondary'>
-              {/* Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica */}
+            <Typography
+              variant='h5'
+              color='text.secondary'
+              sx={{ fontSize: 16 }}
+              component='div'
+            >
+              {user.email}
+              <br />
+              {user.phone}
             </Typography>
           </CardContent>
-        </CardActionArea>
-      </Card>
+          <CardActions>
+            <Button variant='outlined' color='error' onClick={handleSubmit}>
+              Delete
+            </Button>
+          </CardActions>
+        </Card>
+      )}
     </>
   )
 }
