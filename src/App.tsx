@@ -9,7 +9,7 @@ function App() {
     <>
       {' '}
       <Routes>
-        <Route path='/' element={<Apartment />} />
+        <Route path='/dispex' element={<Apartment />} />
         <Route path='/detail-apartment/:id' element={<Residents />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>

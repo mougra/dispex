@@ -16,11 +16,25 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import InputMask from 'react-input-mask'
 
+const error = {
+  color: 'red',
+}
+
 const schema = yup
   .object({
-    name: yup.string().required(),
-    email: yup.string().email().required(),
-    phone: yup.string().required(),
+    name: yup.string().min(3).max(20).required(),
+    email: yup
+      .string()
+      .email()
+      .matches(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        'not a valid email'
+      )
+      .required(),
+    phone: yup
+      .string()
+      .matches(/(.*\d.*){11}/, 'must be exactly 11 digits')
+      .required(),
   })
   .required()
 
@@ -43,6 +57,7 @@ function ControlPanel({ adressId }: ControlPanelProps) {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -54,7 +69,10 @@ function ControlPanel({ adressId }: ControlPanelProps) {
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     data.phone = data.phone.replace(/\D+/g, '')
+    console.log(data.phone.length)
+
     postCreateClients(data)
+    reset()
     setOpen(false)
   }
 
@@ -103,7 +121,7 @@ function ControlPanel({ adressId }: ControlPanelProps) {
               />
             )}
           />
-          <p>{errors.name?.message}</p>
+          <p style={error}>{errors.name?.message}</p>
           <Controller
             name='email'
             control={control}
@@ -121,7 +139,7 @@ function ControlPanel({ adressId }: ControlPanelProps) {
               />
             )}
           />
-          <p>{errors.email?.message}</p>
+          <p style={error}>{errors.email?.message}</p>
           <Controller
             name='phone'
             control={control}
@@ -147,7 +165,7 @@ function ControlPanel({ adressId }: ControlPanelProps) {
               </InputMask>
             )}
           />
-          <p>{errors.phone?.message}</p>
+          <p style={error}>{errors.phone?.message}</p>
         </DialogContent>
         <DialogActions>
           <Button type='submit' onClick={handleSubmit(onSubmit)}>
