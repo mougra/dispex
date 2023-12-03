@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/dispex/static/js/main.6be99f20.js",
+    "index.html": "/dispex/index.html",
+    "main.6be99f20.js.map": "/dispex/static/js/main.6be99f20.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.6be99f20.js"
+  ]
+}
